@@ -21,9 +21,13 @@ export default function Navbar() {
     { href: "/work", label: "work" },
     { href: "/contact", label: "contact" },
   ];
-  const filteredLinks = links.filter((link) => link.href !== pathname);
+
+  const filteredLinks = links.filter((link) => !pathname.includes(link.href));
 
   const renderLinks = () => {
+    // Split pathname to account for nested routes
+    const pathSegments = pathname.slice(1).split("/");
+
     if (pathname === "/home" || pathname === "/") {
       return (
         <>
@@ -54,17 +58,24 @@ export default function Navbar() {
         <Link href="/home" className="text-green-500 px-2 py-2">
           Ananda@Wijaya: ~$
         </Link>
-        <span className="text-white">/</span>
-        <span className="text-white px-2 py-2">{pathname.slice(1)}</span>
+
+        {/* Iterate through pathSegments to ensure proper spacing */}
+        {pathSegments.map((segment, index) => (
+          <span key={index}>
+            <span className="text-white">/</span>
+            <span className="text-white px-2 py-2">{segment}</span>
+          </span>
+        ))}
+
         {!showLinks ? (
           <>
-          <span className="text-white">/</span>
-          <span
-            className="text-white px-2 py-2 cursor-pointer"
-            onClick={toggleLinks}
-          >
-            cd ..
-          </span>
+            <span className="text-white">/</span>
+            <span
+              className="text-white px-2 py-2 cursor-pointer"
+              onClick={toggleLinks}
+            >
+              cd ..
+            </span>
           </>
         ) : (
           filteredLinks.map((link) => (
@@ -81,7 +92,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 flex items-center justify-start p-4">
+    <nav className="fixed top-0 left-0 right-0 flex items-center justify-start p-4 bg-[#0a0a0a] text-xs sm:text-sm md:text-lg">
       {renderLinks()}
     </nav>
   );

@@ -1,22 +1,25 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-// import Footer from "@/components/footer";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+const sourceCodePro = Source_Code_Pro({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+});
+
+export const metadata = {
   title: "Ananda Wijaya",
-  description: "Ananda Wijaya's Portofolio",
+  description: "Ananda Wijaya's Portfolio",
 };
 
 export default function RootLayout({
@@ -26,12 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${sourceCodePro.className} antialiased`}>
         <Navbar />
         <main>{children}</main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
